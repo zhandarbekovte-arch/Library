@@ -68,3 +68,54 @@ API арқылы алынатын негізгі өрістер:
 flake8 . --ignore=E501,W503 --max-line-length=120
 ```
 Бұл автоматты түрде Python кодын стиль бойынша тексереді.
+
+
+
+
+
+
+## Mermaid диаграммасы
+classDiagram
+    %% Абстракт класс Person
+    class Person {
+        - name: str
+        - faculty: str
+        + info()
+    }
+
+    %% Student класы Person-нан мұрагерлік алады
+    class Student {
+        - year: int
+        - borrowed_books: list
+        + borrow_book(book, borrow_time)
+        + return_book(book, return_time)
+        + get_borrowed_books()
+    }
+
+    %% Book класы
+    class Book {
+        - title: str
+        - author: str
+        - genre: str
+        + __str__()
+    }
+
+    %% LibraryStatistics класы
+    class LibraryStatistics {
+        - students: list
+        + total_borrowed_books()
+        + most_popular_genre()
+        + daily_trend()
+        + summary()
+    }
+
+    %% Байланыстар
+    Person <|-- Student
+    Student "1" --> "*" Book : borrows
+
+
+
+
+
+
+
