@@ -1,77 +1,91 @@
 from datetime import datetime
 from abc import ABC, abstractmethod
 
+
 class Person(ABC):
-    """Адамдар үшін базалық абстрактілі класс"""
+    """Адамдар үшін базалық абстрактілі класс."""
+
     def __init__(self, name, faculty):
         self._name = name
         self._faculty = faculty
 
     @abstractmethod
     def info(self):
-        pass
+        """Студент/адам туралы ақпарат."""
+        raise NotImplementedError
 
     def __str__(self):
         return f"{self._name} ({self._faculty})"
 
 
 class Book:
-    """Кітап туралы ақпарат"""
+    """Кітап туралы ақпарат."""
+
     def __init__(self, title, author, genre):
-        self.__title = title
-        self.__author = author
-        self.__genre = genre
+        self._title = title
+        self._author = author
+        self._genre = genre
 
     @property
     def title(self):
-        return self.__title
+        return my._title
 
     @property
     def author(self):
-        return self.__author
+        return self._author
 
     @property
     def genre(self):
-        return self.__genre
+        return self._genre
 
     def __str__(self):
-        return f"{self.__title} ({self.__author}, {self.__genre})"
+        return f"{self._title} ({self._author}, {self._genre})"
 
     def __eq__(self, other):
-        return isinstance(other, Book) and self.__title == other.__title and self.__author == other.__author
+        return (
+            isinstance(other, Book)
+            and self._title == other._title
+            and self._author == other._author
+        )
 
     def __hash__(self):
-        return hash((self.__title, self.__author))
+        return hash((self._title, self._author))
 
 
 class Student(Person):
-    """Студент классы (Person-нан мұрагерлік алған)"""
+    """Студент класы."""
+
     def __init__(self, name, faculty, year):
         super().__init__(name, faculty)
-        self.__year = year
-        self.__borrowed_books = []  # (Book, borrow_time, return_time)
+        self._year = year
+        self._borrowed_books = []
 
-    def borrow_book(self, book: Book, borrow_time: datetime):
-        """Кітап алу"""
-        self.__borrowed_books.append((book, borrow_time, None))
+    def borrow_book(self, book, borrow_time: datetime):
+        """Кітап алу."""
+        self._borrowed_books.append((book, borrow_time, None))
 
-    def return_book(self, book: Book, return_time: datetime):
-        """Кітап қайтару"""
-        for i, (b, borrow_time, r_time) in enumerate(self.__borrowed_books):
+    def return_book(self, book, return_time):
+        """Алынған кітапты қайтару."""
+        for index, (b, borrow_time, r_time) in enumerate(
+            self._borrowed_books
+        ):
             if b == book and r_time is None:
-                self.__borrowed_books[i] = (b, borrow_time, return_time)
+                self._borrowed_books[index] = (
+                    b,
+                    borrow_time,
+                    return_time,
+                )
                 break
 
     def get_borrowed_books(self):
-        return self.__borrowed_books
+        return self._borrowed_books
 
     @property
     def year(self):
-        return self.__year
+        return self._year
 
     def info(self):
-        return f"{self._name} ({self._faculty}, {self.__year}-курс)"
+        return f"{self._name} ({self._faculty}, {self._year}-курс)"
 
     def __len__(self):
-        """Студенттің алған кітаптарының санын қайтарады"""
-        return len(self.__borrowed_books)
+        return len(self._borrowed_books)
