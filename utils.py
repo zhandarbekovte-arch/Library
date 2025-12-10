@@ -1,19 +1,22 @@
 import random
 from datetime import datetime, timedelta
+
 from models import Book, Student
 
+
 def random_date():
-    """Соңғы 30 күн ішіндегі кездейсоқ күн мен уақыт"""
+    """Соңғы 30 күн ішіндегі кездейсоқ уақыт."""
     days_ago = random.randint(0, 30)
     random_time = timedelta(
         hours=random.randint(0, 23),
         minutes=random.randint(0, 59),
-        seconds=random.randint(0, 59)
+        seconds=random.randint(0, 59),
     )
     return datetime.now() - timedelta(days=days_ago) + random_time
 
+
 def get_sample_data():
-    """Бастапқы студенттер мен кітаптар тізімі"""
+    """Студенттер мен кітаптардың бастапқы дайын тізімі."""
     books = [
         Book("Python негіздері", "Г. Әбілқайыр", "Бағдарламалау"),
         Book("Машина үйрену", "Т. Ермеков", "Жасанды интеллект"),
@@ -36,16 +39,17 @@ def get_sample_data():
         Student("Аяжан Рүстем", "Философия", 1),
     ]
 
-    # Әр студентке кездейсоқ кітаптар мен уақыттар беру
     for student in students:
         borrowed = random.sample(books, random.randint(2, 5))
-        for b in borrowed:
+
+        for book in borrowed:
             borrow_time = random_date()
-            student.borrow_book(b, borrow_time)
-            # Кездейсоқ қайтару уақыты
+            student.borrow_book(book, borrow_time)
+
             if random.choice([True, False]):
-                return_time = borrow_time + timedelta(days=random.randint(1, 10))
-                student.return_book(b, return_time)
+                return_time = borrow_time + timedelta(
+                    days=random.randint(1, 10)
+                )
+                student.return_book(book, return_time)
 
     return students
-
