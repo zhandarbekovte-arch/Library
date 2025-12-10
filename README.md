@@ -29,8 +29,6 @@ library-stats/
 └── README.md            # Осы файл
 ```
 
----
-
 ## 🧰 Қолдану нұсқаулығы
 
  Қосымшаны іске қосу:
@@ -69,12 +67,9 @@ flake8 . --ignore=E501,W503 --max-line-length=120
 ```
 Бұл автоматты түрде Python кодын стиль бойынша тексереді.
 
+## Mermaid диаграммасы (UML)
 
-
-
-
-
-## Mermaid диаграммасы
+```mermaid
 classDiagram
     %% Абстракт класс Person
     class Person {
@@ -112,9 +107,9 @@ classDiagram
     %% Байланыстар
     Person <|-- Student
     Student "1" --> "*" Book : borrows
-
-
-
+    LibraryStatistics "1" o-- "*" Student : manages
+```
+```
 
 
 
