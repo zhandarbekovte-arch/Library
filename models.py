@@ -28,7 +28,7 @@ class Book:
 
     @property
     def title(self):
-        return my._title
+        return self._title
 
     @property
     def author(self):
