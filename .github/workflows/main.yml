@@ -1,13 +1,12 @@
-name: Deploy Streamlit App
+name: PEP8 Style Check
 
 on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
 
 jobs:
-  build-deploy:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,13 +16,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.12
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install flake8
 
-      - name: Run Streamlit
+      - name: Run PEP8 (flake8)
         run: |
-          streamlit run main.py --server.port 8501 --server.headless true
+          flake8 . --ignore=E501,W503 --max-line-length=120
